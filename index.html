@@ -1,38 +1,131 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>مختبر التوعية الأمنية</title>
-<style>
-body {
-  font-family: Arial;
-  background: #171923;
-  color: white;
-  text-align: center;
-  padding: 40px 15px;
-}
-.box {
-  background: #292d3e;
-  padding: 25px;
-  border-radius: 15px;
-  max-width: 500px;
-  margin: auto;
-}
-h1 { color: #8ddcff; }
-p { line-height: 2; }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔐 مختبر التوعية الأمنية العالمي</title>
+    <style>
+        :root {
+            --bg-color: #f4f7f6;
+            --text-color: #333;
+            --card-bg: #ffffff;
+            --primary-color: #2c3e50;
+        }
+        .dark-theme {
+            --bg-color: #1a252f;
+            --text-color: #ecf0f1;
+            --card-bg: #2c3e50;
+            --primary-color: #1abc9c;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            transition: 0.3s;
+        }
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        h1, h2 { color: var(--primary-color); text-align: center; }
+        .btn {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 5px;
+            transition: 0.2s;
+        }
+        .btn:hover { opacity: 0.9; }
+        .quiz-box, .pass-box {
+            background: rgba(0,0,0,0.03);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-right: 5px solid #3498db;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+        #pass-result, #quiz-result {
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        .toggle-btn { float: left; background: #7f8c8d; }
+    </style>
 </head>
 <body>
-<div class="box">
-<h1>🔐 مختبر التوعية الأمنية</h1>
-<h2>هل تستطيع اكتشاف الرابط المضلل؟</h2>
-<p>ليس كل رابط يبدو رسميًا رابطًا موثوقًا!</p>
-<p>تحقق دائمًا من اسم النطاق قبل الضغط.</p>
-<p>لا تدخل كلمة مرورك في صفحات مجهولة.</p>
-<hr>
-<h3>انتهت المحاكاة التعليمية</h3>
-<p>هذه صفحة توعوية لا تجمع أي بيانات شخصية.</p>
+
+<div class="container">
+    <button class="btn toggle-btn" onclick="toggleTheme()">🌙 مظهر</button>
+    
+    <h1>🔐 مختبر التوعية الأمنية المطور</h1>
+    <p style="text-align: center;">مرحباً بك في المحاكاة العالمية لحماية نفسك من الاختراق الإلكتروني.</p>
+
+    <div class="quiz-box">
+        <h2>🎮 تحدي الروابط الفوري</h2>
+        <p>وصلتك رسالة تطلب منك تحديث حسابك على إنستغرام، أي رابط ستضغطين عليه؟</p>
+        <button class="btn" onclick="checkLink(false)">👉 https://lhnstagram.com</button>
+        <button class="btn" onclick="checkLink(true)">👉 https://instagram.com</button>
+        <div id="quiz-result"></div>
+    </div>
+
+    <div class="pass-box">
+        <h2>🔑 مقياس قوة كلمة المرور</h2>
+        <p>جربي كتابة كلمة مرور عشوائية هنا لتعرفي مدى قوتها (موقعنا آمن ولا يحفظها):</p>
+        <input type="text" id="passwordInput" placeholder="اكتبي كلمة المرور التجريبية هنا..." oninput="checkPassword()">
+        <div id="pass-result"></div>
+    </div>
+
+    <p style="text-align: center; font-size: 12px; color: #888; margin-top: 30px;">هذه محاكاة تعليمية وتوعوية مجانية بنسبة 100%.</p>
 </div>
+
+<script>
+    function toggleTheme() {
+        document.body.classList.toggle("dark-theme");
+    }
+
+    function checkLink(isCorrect) {
+        const result = document.getElementById("quiz-result");
+        if(isCorrect) {
+            result.innerHTML = "<span style='color: #2ecc71;'>✅ أحسنتِ! هذا هو الرابط الرسمي والآمن للشركة.</span>";
+        } else {
+            result.innerHTML = "<span style='color: #e74c3c;'>❌ احذري! هذا رابط مخادع، لاحظوا حرف الـ L الصغير (l) مكان حرف الـ I الكبير!</span>";
+        }
+    }
+
+    function checkPassword() {
+        const password = document.getElementById("passwordInput").value;
+        const result = document.getElementById("pass-result");
+        
+        if (password.length === 0) {
+            result.innerHTML = "";
+            return;
+        }
+        
+        if (password.length < 6) {
+            result.innerHTML = "<span style='color: #e74c3c;'>🔴 ضعيفة جداً! (سهلة التخمين في ثوانٍ)</span>";
+        } else if (password.length >= 6 && !/[@#\$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password)) {
+            result.innerHTML = "<span style='color: #f39c12;'>🟡 متوسطة! (أنصحكِ بإضافة رموز مثل @ أو # لتصبح أقوى)</span>";
+        } else {
+            result.innerHTML = "<span style='color: #2ecc71;'>🟢 قوية جداً واحترافية! يصعب اختراقها.</span>";
+        }
+    }
+</script>
+
 </body>
 </html>
