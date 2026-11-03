@@ -3,127 +3,284 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🔐 مختبر التوعية الأمنية العالمي</title>
+    <title>مختبر التوعية الأمنية | المحقق السيبراني</title>
+    <link href="https://googleapis.com" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #f4f7f6;
-            --text-color: #333;
-            --card-bg: #ffffff;
-            --primary-color: #2c3e50;
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --text-color: #f8fafc;
+            --primary: #38bdf8;
+            --success: #22c55e;
+            --danger: #ef4444;
         }
-        .dark-theme {
-            --bg-color: #1a252f;
-            --text-color: #ecf0f1;
-            --card-bg: #2c3e50;
-            --primary-color: #1abc9c;
-        }
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Cairo', sans-serif;
             background-color: var(--bg-color);
             color: var(--text-color);
             margin: 0;
             padding: 20px;
-            transition: 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
         }
+
         .container {
-            max-width: 700px;
-            margin: 0 auto;
-            background: var(--card-bg);
+            max-width: 800px;
+            width: 100%;
+            text-align: center;
+        }
+
+        header h1 {
+            color: var(--primary);
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            color: #94a3b8;
+            font-size: 1.1rem;
+        }
+
+        .game-card {
+            background-color: var(--card-bg);
+            border-radius: 16px;
             padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            margin-top: 30px;
+            border: 1px solid #334155;
+            transition: all 0.3s ease;
         }
-        h1, h2 { color: var(--primary-color); text-align: center; }
-        .btn {
-            background-color: #3498db;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-            margin: 5px;
-            transition: 0.2s;
+
+        .score-board {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            font-weight: bold;
+            color: var(--primary);
         }
-        .btn:hover { opacity: 0.9; }
-        .quiz-box, .pass-box {
-            background: rgba(0,0,0,0.03);
-            padding: 15px;
+
+        .scenario-box {
+            background: #0f172a;
+            padding: 20px;
             border-radius: 8px;
             margin: 20px 0;
-            border-right: 5px solid #3498db;
+            text-align: right;
+            border-right: 5px solid var(--primary);
         }
-        input[type="text"] {
-            width: 100%;
+
+        .url-display {
+            background: #334155;
             padding: 10px;
-            margin: 10px 0;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-            box-sizing: border-box;
+            border-radius: 6px;
+            font-family: monospace;
+            direction: ltr;
+            text-align: center;
+            font-size: 1.1rem;
+            word-break: break-all;
+            color: #f1f5f9;
         }
-        #pass-result, #quiz-result {
+
+        .btn-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        button {
+            font-family: 'Cairo', sans-serif;
+            font-size: 1.2rem;
             font-weight: bold;
-            margin-top: 10px;
+            padding: 12px 35px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.2s, background-color 0.2s;
         }
-        .toggle-btn { float: left; background: #7f8c8d; }
+
+        button:active {
+            transform: scale(0.95);
+        }
+
+        .btn-safe {
+            background-color: var(--success);
+            color: white;
+        }
+
+        .btn-phish {
+            background-color: var(--danger);
+            color: white;
+        }
+
+        .feedback {
+            margin-top: 20px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            min-height: 30px;
+        }
+
+        .explanation {
+            margin-top: 10px;
+            color: #94a3b8;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .restart-btn {
+            background-color: var(--primary);
+            color: #0f172a;
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <button class="btn toggle-btn" onclick="toggleTheme()">🌙 مظهر</button>
-    
-    <h1>🔐 مختبر التوعية الأمنية المطور</h1>
-    <p style="text-align: center;">مرحباً بك في المحاكاة العالمية لحماية نفسك من الاختراق الإلكتروني.</p>
+    <header>
+        <h1>🔐 مختبر التوعية الأمنية</h1>
+        <p>مرحباً بك في تحدي "المحقق السيبراني" العالمي. هل يمكنك كشف روابط التصيد؟</p>
+    </header>
 
-    <div class="quiz-box">
-        <h2>🎮 تحدي الروابط الفوري</h2>
-        <p>وصلتك رسالة تطلب منك تحديث حسابك على إنستغرام، أي رابط ستضغطين عليه؟</p>
-        <button class="btn" onclick="checkLink(false)">👉 https://lhnstagram.com</button>
-        <button class="btn" onclick="checkLink(true)">👉 https://instagram.com</button>
-        <div id="quiz-result"></div>
+    <div class="game-card" id="game-card">
+        <div class="score-board">
+            <span id="question-number">السؤال: 1 / 4</span>
+            <span id="score-display">النقاط: 0</span>
+        </div>
+
+        <h3 id="question-text">تحقق من السيناريو التالي والرابط المرفق به:</h3>
+        
+        <div class="scenario-box" id="scenario-text">
+            وصلتك رسالة من البنك الذي تتعامل معه تطلب منك تحديث بياناتك فوراً لتجنب إيقاف حسابك.
+        </div>
+
+        <div class="url-display" id="url-text">
+            http://secure-riyadbank-login.com
+        </div>
+
+        <div class="btn-container" id="action-buttons">
+            <button class="btn-safe" onclick="checkAnswer(false)">آمن ✅</button>
+            <button class="btn-phish" onclick="checkAnswer(true)">تصيد ومضلل 🚨</button>
+        </div>
+
+        <div id="feedback-box" class="feedback"></div>
+        <div id="explanation-box" class="explanation"></div>
+        
+        <button class="restart-btn hidden" id="next-btn" onclick="nextQuestion()">السؤال التالي ➡️</button>
     </div>
 
-    <div class="pass-box">
-        <h2>🔑 مقياس قوة كلمة المرور</h2>
-        <p>جربي كتابة كلمة مرور عشوائية هنا لتعرفي مدى قوتها (موقعنا آمن ولا يحفظها):</p>
-        <input type="text" id="passwordInput" placeholder="اكتبي كلمة المرور التجريبية هنا..." oninput="checkPassword()">
-        <div id="pass-result"></div>
+    <div class="game-card hidden" id="result-card">
+        <h2>🎉 انتهى التحدي الأسطوري!</h2>
+        <p id="final-score" style="font-size: 1.5rem; color: var(--primary);"></p>
+        <p id="evaluation-text"></p>
+        <button class="restart-btn" onclick="restartGame()">إعادة التحدي 🔄</button>
     </div>
-
-    <p style="text-align: center; font-size: 12px; color: #888; margin-top: 30px;">هذه محاكاة تعليمية وتوعوية مجانية بنسبة 100%.</p>
 </div>
 
 <script>
-    function toggleTheme() {
-        document.body.classList.toggle("dark-theme");
+    const questions = [
+        {
+            scenario: "وصلتك رسالة من البنك الذي تتعامل معه تطلب منك تحديث بياناتك فوراً لتجنب إيقاف حسابك الإئتماني.",
+            url: "http://secure-riyadbank-login.com",
+            isPhishing: true,
+            explanation: "🚨 تصيد! البنوك الرسمية لا تستخدم نطاقات فرعية غير موثقة، ولا تستخدم بروتوكول http غير المشفر للاستمارات الحساسة."
+        },
+        {
+            scenario: "تريد الدخول إلى حسابك في موقع تعلّم البرمجة العالمي الشهير GitHub لتصفح مشاريعك.",
+            url: "https://github.com",
+            isPhishing: false,
+            explanation: "✅ آمن! هذا هو النطاق الرسمي الصحيح لشركة GitHub ويبدأ بـ https المشفر والموثق."
+        },
+        {
+            scenario: "تلقيت بريداً إلكترونياً من شركة Netflix يخبرك بوجود مشكلة في تجديد اشتراكك السهري وضغطت على رابط إصلاح الحساب الدفعي.",
+            url: "https://netflix-billing-support.net",
+            isPhishing: true,
+            explanation: "🚨 تصيد! انتبه لاسم النطاق بعد النقاط، الموقع ينتهي بـ net وليس الموقع الرسمي netflix.com."
+        },
+        {
+            scenario: "صديقك أرسل لك رابطاً لمشاركة ملف عرض تقديمي عبر خدمة Google Drive الشهيرة.",
+            url: "https://google.com",
+            isPhishing: false,
+            explanation: "✅ آمن! الرابط يتبع مباشرة لنطاق google.com الرسمي والآمن."
+        }
+    ];
+
+    let currentQuestionIndex = 0;
+    let score = 0;
+
+    function showQuestion() {
+        const q = questions[currentQuestionIndex];
+        document.getElementById("question-number").innerText = `السؤال: ${currentQuestionIndex + 1} / ${questions.length}`;
+        document.getElementById("scenario-text").innerText = q.scenario;
+        document.getElementById("url-text").innerText = q.url;
+        document.getElementById("feedback-box").innerText = "";
+        document.getElementById("explanation-box").innerText = "";
+        document.getElementById("next-btn").classList.add("hidden");
+        document.getElementById("action-buttons").classList.remove("hidden");
     }
 
-    function checkLink(isCorrect) {
-        const result = document.getElementById("quiz-result");
-        if(isCorrect) {
-            result.innerHTML = "<span style='color: #2ecc71;'>✅ أحسنتِ! هذا هو الرابط الرسمي والآمن للشركة.</span>";
+    function checkAnswer(userChoice) {
+        const q = questions[currentQuestionIndex];
+        document.getElementById("action-buttons").classList.add("hidden");
+        
+        if (userChoice === q.isPhishing) {
+            score += 25;
+            document.getElementById("feedback-box").innerText = "إجابة عبقرية وصحيحة! 🎉";
+            document.getElementById("feedback-box").style.color = "var(--success)";
         } else {
-            result.innerHTML = "<span style='color: #e74c3c;'>❌ احذري! هذا رابط مخادع، لاحظوا حرف الـ L الصغير (l) مكان حرف الـ I الكبير!</span>";
+            document.getElementById("feedback-box").innerText = "للأسف وقعت في الفخ! 🧐";
+            document.getElementById("feedback-box").style.color = "var(--danger)";
+        }
+        
+        document.getElementById("explanation-box").innerText = q.explanation;
+        document.getElementById("score-display").innerText = `النقاط: ${score}`;
+        document.getElementById("next-btn").classList.remove("hidden");
+        
+        if(currentQuestionIndex === questions.length - 1) {
+            document.getElementById("next-btn").innerText = "عرض النتيجة النهائية 🏆";
+        } else {
+            document.getElementById("next-btn").innerText = "السؤال التالي ➡️";
         }
     }
 
-    function checkPassword() {
-        const password = document.getElementById("passwordInput").value;
-        const result = document.getElementById("pass-result");
-        
-        if (password.length === 0) {
-            result.innerHTML = "";
-            return;
-        }
-        
-        if (password.length < 6) {
-            result.innerHTML = "<span style='color: #e74c3c;'>🔴 ضعيفة جداً! (سهلة التخمين في ثوانٍ)</span>";
-        } else if (password.length >= 6 && !/[@#\$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password)) {
-            result.innerHTML = "<span style='color: #f39c12;'>🟡 متوسطة! (أنصحكِ بإضافة رموز مثل @ أو # لتصبح أقوى)</span>";
+    function nextQuestion() {
+        currentQuestionIndex++;
+        if (currentQuestionIndex < questions.length) {
+            showQuestion();
         } else {
-            result.innerHTML = "<span style='color: #2ecc71;'>🟢 قوية جداً واحترافية! يصعب اختراقها.</span>";
+            showResults();
         }
+    }
+
+    function showResults() {
+        document.getElementById("game-card").classList.add("hidden");
+        document.getElementById("result-card").classList.remove("hidden");
+        document.getElementById("final-score").innerText = `مجموع نقاطك: ${score} من 100`;
+        
+        let evalText = "";
+        if(score === 100) {
+            evalText = "🥇 مذهل! أنت محقق سيبراني بمستوى عالمي، لا يمكن لأي محاولة تصيد أن تخدعك!";
+        } else if(score >= 50) {
+            evalText = "🥈 أداء جيد جداً! لديك وعي أمني ممتاز ولكن تحتاج للحذر من بعض الروابط الذكية.";
+        } else {
+            evalText = "⚠️ انتبه! تحتاج إلى صقل مهاراتك الأمنية لحماية بياناتك من القراصنة.";
+        }
+        document.getElementById("evaluation-text").innerText = evalText;
+    }
+
+    function restartGame() {
+        currentQuestionIndex = 0;
+        score = 0;
+        document.getElementById("score-display").innerText = "النقاط: 0";
+        document.getElementById("result-card").classList.add("hidden");
+        document.getElementById("game-card").classList.remove("hidden");
+        showQuestion();
     }
 </script>
 
